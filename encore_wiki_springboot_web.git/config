@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/haein147/encore_wiki_springboot_web.git
+	fetch = +refs/*:refs/*
+	mirror = true

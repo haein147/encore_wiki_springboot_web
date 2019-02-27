@@ -1,29 +1,81 @@
 {
-  "query": {
-    "function_score": {
-      "query": {
-        "bool": {
-          "must": [
-            {
-              "term": {
-                "title": "안성"
-              }
-            }
-          ],
-          "must_not": [],
-          "should": []
-        }
-      },
-      "script_score": {
-        "script": {
-          "source": "doc['score'].value / 10 + _score"
-        }
-      }
-    }
-  },
-  "from": 0,
-  "size": 50,
-  "sort": [],
-  "aggs": {}
+	"size": 10,
+	"query": {
+		"function_score": {
+			"query": {
+				"bool": {
+					"must": [
+						{
+							"query_string": {
+								"query": "즐라탄",
+								"fields": [],
+								"type": "best_fields",
+								"default_operator": "or",
+								"max_determinized_states": 10000,
+								"enable_position_increments": true,
+								"fuzziness": "AUTO",
+								"fuzzy_prefix_length": 0,
+								"fuzzy_max_expansions": 50,
+								"phrase_slop": 0,
+								"escape": false,
+								"auto_generate_synonyms_phrase_query": true,
+								"fuzzy_transpositions": true,
+								"boost": 1.0
+							}
+						}
+					],
+					"adjust_pure_negative": true,
+					"boost": 1.0
+				}
+			},
+			"functions": [
+				{
+					"filter": {
+						"match": {
+							"title": {
+								"query": "즐라탄",
+								"operator": "OR",
+								"prefix_length": 0,
+								"max_expansions": 50,
+								"fuzzy_transpositions": true,
+								"lenient": false,
+								"zero_terms_query": "NONE",
+								"auto_generate_synonyms_phrase_query": true,
+								"boost": 1.3
+							}
+						}
+					},
+					"weight": 1.0
+				},
+				{
+					"filter": {
+						"match_all": {
+							"boost": 1.5
+						}
+					},
+					"weight": 20.0,
+					"script_score": {
+						"script": {
+							"source": "_score+_score*((4*((Math.log(1+doc['score'].value-params.scmin))/(Math.log(params.scmax-params.scmin))))+(7.5*((Math.log(1+doc['pageview'].value-params.pvmin))/(Math.log(params.pvmax-params.pvmin))))+((doc['editcount'].value-params.editmin)/(params.editmax-params.editmin))+1.5*(Math.log(1+doc['descriptionsize'].value-params.desizemin)/Math.log(params.desizemax-params.desizemin)))",
+							"lang": "painless",
+							"params": {
+								"editmin": 1,
+								"desizemax": 132042,
+								"scmin": 0,
+								"editmax": 14413,
+								"desizemin": 0,
+								"scmax": 10749.552,
+								"pvmin": 0,
+								"pvmax": 112242
+							}
+						}
+					}
+				}
+			],
+			"score_mode": "multiply",
+			"boost_mode": "sum",
+			"max_boost": 3.4028235E38,
+			"boost": 1.0
+		}
+	}
 }
-

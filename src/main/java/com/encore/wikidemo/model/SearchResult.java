@@ -2,10 +2,21 @@ package com.encore.wikidemo.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 public class SearchResult {
     private String title;
     private String description;
     private double score;
+    private List<String> similars;
+
+    public List<String> getSimilars() {
+        return similars;
+    }
+    
+    public void setSimilars(List<String> similars) {
+        this.similars = similars;
+    }
 
     public String getTitle() {
         return title;
@@ -24,7 +35,11 @@ public class SearchResult {
     }
 
     public String getShortenDescription() {
-        return StringUtils.split(getDescription(), ".")[0];
+    	if(!getDescription().isEmpty()) {
+    		return StringUtils.split(getDescription(), ".")[0];
+    	}else {
+    		return "No Description";
+    	}
     }
 
     public double getScore() {
