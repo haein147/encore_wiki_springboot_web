@@ -1,6 +1,8 @@
 # encore_wiki_springboot_web
 최적화된 스코어링 + Doc2Vec이 적용된 검색엔진 웹서비스
 
+<br>
+<br>
 
 ## 클래스 설명
 1. Spring Boot 로 웹서비스 구현
@@ -14,8 +16,14 @@
 7. 위의 문서를 학습시킨 model로 Doc2Vec 적용
 8. 적용 후 light sail 에 생성한 데이터베이스 인스턴스에 서빙함
 9. Spring Boot로 mysql 연동해서 검색된 쿼리와 가장 가까운 벡터화된 문서 top3를 추천해준다.
+<br>
+<br>
 
 ## 고도화 작업(앞으로 진행해야 할 것)
 1. Doc2Vec이 학습되는 문서들은 특수문자가 붙으면 학습이 불가한 경우
  -> 44만개 문서 중 11만개 정도만 완료가 되었음
 2. Apache Spark 로 Doc2Vec을 새롭게 적용해 볼 예정
+<br>
+<br>
+
+
